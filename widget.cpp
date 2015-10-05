@@ -13,7 +13,8 @@ Widget::Widget(QWidget *parent) :
     coordsFile = new QFile();
     galsFile = new QFile();
     rcTimer->start(1000);
-    socket->connectToHost("192.168.1.12",12345);
+    ui->IPEdit->setText("192.168.1.217");
+    //socket->connectToHost(ip,12345);
     connect(socket,SIGNAL(connected()),this,SLOT(connected()));
     connect(socket,SIGNAL(disconnected()),this,SLOT(tryReconnect()));
     connect(rcTimer,SIGNAL(timeout()),this,SLOT(openConnection()));
@@ -50,13 +51,15 @@ void Widget::connected()
 }
 void Widget::tryReconnect()
 {
+    qDebug()<<"dc";
     coordsSendTimer->stop();
     rcTimer->start(1000);
 }
 
 void Widget::openConnection()
 {
-    socket->connectToHost("192.168.1.12",12345);
+    qDebug()<<"try connect";
+    socket->connectToHost(ip,12345);
 }
 
 void Widget::sendCoords()
@@ -100,4 +103,14 @@ void Widget::on_GalsSendButton_clicked()
     galsFile = new QFile(fileGalsName);
     if(galsFile->open(QIODevice::ReadOnly))
         galsSendTimer->start(50);
+}
+
+void Widget::on_ipSetButton_clicked()
+{
+    ip = ui->IPEdit->text();
+}
+
+void Widget::on_pushButton_clicked()
+{
+    coordsSendTimer->stop();
 }

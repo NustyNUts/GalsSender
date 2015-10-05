@@ -18,6 +18,7 @@ class Widget : public QWidget
     Q_OBJECT
     QFile* coordsFile;
     QFile* galsFile;
+    QString ip;
     QString fileCoordsName;
     QString fileGalsName;
     QTcpSocket* socket;
@@ -46,6 +47,10 @@ private slots:
     void on_toolButton_2_clicked();
 
     void on_GalsSendButton_clicked();
+
+    void on_ipSetButton_clicked();
+
+    void on_pushButton_clicked();
 
 private:
     Ui::Widget *ui;
